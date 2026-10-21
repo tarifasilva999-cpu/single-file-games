@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Core Courier</title>
+  <script>
+    // Restore the palette before the first paint so night mode never flashes bright.
+    try {
+      document.documentElement.dataset.uiTheme = localStorage.getItem("coreCourierUITheme") === "dark" ? "dark" : "light";
+    } catch {
+      document.documentElement.dataset.uiTheme = "light";
+    }
+  </script>
   <style>
     :root {
       --bg: #101016;
@@ -1905,6 +1913,75 @@
     @media (prefers-reduced-motion:reduce) {
       *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
     }
+    /* Night palette: warm text, charcoal surfaces, and subdued accent fills. */
+    :root[data-ui-theme="dark"] {
+      color-scheme: dark;
+      --ui-ink:#dcd6cb;
+      --ui-paper:#191b20;
+      --ui-card:#22252b;
+      --ui-paper-hover:#2d3138;
+      --ui-muted:#b1aca3;
+      --ui-line:#50545c;
+      --ui-coral:#56362f;
+      --ui-coral-soft:#382a29;
+      --ui-yellow:#443b2b;
+      --ui-yellow-soft:#302c24;
+      --ui-mint:#263a32;
+      --ui-lilac:#342e40;
+      --ui-good:#99c5ac;
+      --ui-danger:#dfa18f;
+      --ui-disabled:#292b30;
+      --ui-shadow:3px 4px 0 #0c0e11;
+      --ink:var(--ui-ink);
+      --cream:var(--ui-card);
+      --amber:#cba66e;
+      --line:var(--ui-line);
+      --line-bright:#737780;
+    }
+    :root[data-ui-theme="dark"] :is(.menu,.shop-modal,.pause-menu,.upgrade-menu,.rival-panel,.building-panel,.hud,.flow-hud,.build-bar,.zone-readout,.input-debug,.upgrade-card) {
+      --text:var(--ui-ink); --muted:var(--ui-muted); --line:var(--ui-line); --line-bright:#737780;
+    }
+    :root[data-ui-theme="dark"], :root[data-ui-theme="dark"] body { background:#101216; }
+    :root[data-ui-theme="dark"] .screen { background:rgba(7,9,12,.76); }
+    :root[data-ui-theme="dark"] :is(.menu,.mode-card,.difficulty-card,.briefing-panel,.meta-chip,.primary,.secondary,.shop-tab,.shop-modal,.pause-menu,.upgrade-menu,.upgrade-card,.route-card,.route-sigil,.market-offer,.skin-preview-panel,.skin-preview-top,.market-buy,.skin-equip-button,.skin-preview-controls button,.pause-menu button,.rival-actions button,.shop-action,.build-btn,.hud-card,.wide-card,.flow-hud,.zone-readout,.build-bar,.building-panel,.input-debug,.core-warning,.cargo-slot,.card-art,.card-stamp,.completion-burst,.tutorial-guide,.pause-postmark,.combo-guide-card.active,.market-heading > span,.skin-shop-heading > span) {
+      border-color:var(--ui-line); box-shadow:var(--ui-shadow);
+    }
+    :root[data-ui-theme="dark"] .menu { color:var(--ui-ink); background:var(--ui-paper); scrollbar-color:var(--ui-line) transparent; }
+    :root[data-ui-theme="dark"] :is(.menu,.shop-modal,.pause-menu,.upgrade-menu)::before { background:repeating-linear-gradient(125deg,#101216 0 7px,#66563b 7px 14px); }
+    :root[data-ui-theme="dark"] :is(.menu-header,.menu .title-row,.contract-difficulty,.object-key,.briefing-note,.market-heading,.skin-shop-heading,.skin-preview-controls) { border-color:var(--ui-line); }
+    :root[data-ui-theme="dark"] :is(.brand-mark,.primary,.menu-actions .primary,.completion-burst) { color:var(--ui-ink); background:var(--ui-coral); }
+    :root[data-ui-theme="dark"] .brand-mark { border-color:var(--ui-line); box-shadow:var(--ui-shadow); }
+    :root[data-ui-theme="dark"] .brand-copy h1 span { color:#d79b84; }
+    :root[data-ui-theme="dark"] :is(.brand-copy .eyebrow,.brand-tagline,.meta-chip span,.section-heading small,.mode-card::before,.mode-card span,.mode-card.selected span,.difficulty-title span,.difficulty-card span,.difficulty-card.selected span,.briefing-steps li,.briefing-steps li::before,.briefing-note,.control-row,.object-key .legend-item,.menu .subtitle,.menu .best-chip,.menu-actions .quiet-button,.hud > .hud-card .hud-label,.card-desc) { color:var(--ui-muted); }
+    :root[data-ui-theme="dark"] :is(.mode-card,.difficulty-card,.briefing-panel,.meta-chip,.secondary,.skin-preview-controls) { color:var(--ui-ink); background:var(--ui-card); }
+    :root[data-ui-theme="dark"] :is(.mode-card:hover,.difficulty-card:hover,.shop-tab:hover) { background:var(--ui-paper-hover); border-color:#92958f; }
+    :root[data-ui-theme="dark"] :is(.mode-card.selected,.meta-chip.currency-chip,.briefing-panel:first-child,.shop-side,.rival-panel,.completion-burst) { color:var(--ui-ink); background:var(--ui-yellow); border-color:#8f7956; }
+    :root[data-ui-theme="dark"] .difficulty-card.selected { background:var(--ui-coral); border-color:#c3937c; }
+    :root[data-ui-theme="dark"] :is(.mode-card.selected,.difficulty-card.selected) strong { color:#e5c391; }
+    :root[data-ui-theme="dark"] :is(.meta-chip strong,.difficulty-title strong,.card-title,.section-number,.menu .best-chip.currency-chip) { color:var(--ui-ink); }
+    :root[data-ui-theme="dark"] .section-number { background:var(--ui-paper-hover); }
+    :root[data-ui-theme="dark"] :is(.briefing-panel:first-child,.rival-panel,.tutorial-guide)::before { background:rgba(113,103,81,.5); }
+    :root[data-ui-theme="dark"] :is(kbd,.menu-actions kbd) { color:var(--ui-ink); border-color:var(--ui-line); background:var(--ui-paper); }
+    :root[data-ui-theme="dark"] :is(.shop-tab,.shop-side .eyebrow,.skin-preview-title > span,.market-roll-clock b,.market-progress) { color:#c7ad82; }
+    :root[data-ui-theme="dark"] :is(.card-art,.card-stamp) { background:color-mix(in srgb,var(--card-accent,#79d6ff) 12%,var(--ui-card)) !important; box-shadow:var(--ui-shadow) !important; }
+    :root[data-ui-theme="dark"] .card-level { color:#c7ad82; background:var(--ui-yellow-soft); border-color:var(--ui-line); }
+    :root[data-ui-theme="dark"] .card-tag { color:#d79b84; }
+    :root[data-ui-theme="dark"] .upgrade-card .stat-line b { color:var(--ui-good) !important; }
+    :root[data-ui-theme="dark"] .route-pill.good { color:var(--ui-good); border-color:#536f5e; background:var(--ui-mint); }
+    :root[data-ui-theme="dark"] .route-pill.bad { color:var(--ui-danger); border-color:#79574e; background:var(--ui-coral-soft); }
+    :root[data-ui-theme="dark"] :is(.bar,.flow-track) { background:#121519; border-color:var(--ui-line); }
+    :root[data-ui-theme="dark"] .flow-hud.active { background:var(--ui-mint); border-color:#668c78; }
+    :root[data-ui-theme="dark"] #coreFill { background:#7baa8c; }
+    :root[data-ui-theme="dark"] #dashFill { background:#7eacbb; }
+    :root[data-ui-theme="dark"] :is(#waveFill,#rushFill) { background:#b99b65; }
+    :root[data-ui-theme="dark"] .cargo-slot:not(.filled) { color:var(--ui-muted); }
+    :root[data-ui-theme="dark"] .cargo-slot.filled { color:#22283b; }
+    :root[data-ui-theme="dark"] .pause-actions .pause-resume:hover { background:var(--ui-paper-hover) !important; }
+    :root[data-ui-theme="dark"] .pause-menu .quit-contract-button:hover { background:var(--ui-coral-soft) !important; }
+    :root[data-ui-theme="dark"] :is(.tier-1,.tier-2,.tier-3,.tier-4) { color:var(--ui-muted); }
+    :root[data-ui-theme="dark"] button:focus-visible { outline-color:#c7ad82; }
+    [data-theme-toggle] { white-space:nowrap; }
+    [data-theme-toggle][aria-pressed="true"] { border-color:#c7ad82 !important; }
   </style>
 </head>
 <body>
@@ -2001,7 +2078,7 @@
     <section class="pause-menu">
       <div class="pause-postmark" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M42 24 10 8l7 16-7 16 32-16Z" fill="#fff0cf" stroke="#22283b" stroke-width="2.5" stroke-linejoin="round"/><path d="M4 18h6M1 24h10M4 30h6" stroke="#22283b" stroke-width="2.5" stroke-linecap="round"/><path d="m29 22 6 2-6 2" stroke="#e76147" stroke-width="3" stroke-linecap="round"/></svg></div>
       <div class="eyebrow">Take a breather</div><h2 id="pauseMenuTitle">Paused</h2><p id="pauseContractName"></p>
-      <div class="pause-actions"><button class="pause-resume" id="resumeRunBtn" type="button">Resume <kbd>P</kbd></button><button id="pauseHangarBtn" type="button">Open hangar</button></div>
+      <div class="pause-actions"><button class="pause-resume" id="resumeRunBtn" type="button">Resume <kbd>P</kbd></button><button id="pauseHangarBtn" type="button">Open hangar</button><button data-theme-toggle type="button" aria-pressed="false">Dark UI: off</button></div>
       <div class="pause-combos"><span>Active combos</span><p id="pauseComboList"></p></div>
       <div class="pause-rivals"><span>Challenge a rival</span><div><button id="pauseRivalrook" type="button">Intercept Rook</button><button id="pauseRivalvex" type="button">Race Vex</button></div><small>Optional. Each rival rewards you once per run.</small></div>
       <button class="quit-contract-button" id="quitContractBtn" type="button">Quit current contract</button><p class="quit-contract-note">Return to the menu. Your collection and earned currency stay saved.</p>
@@ -2089,6 +2166,7 @@
             <button class="secondary" id="menuShopBtn">Hangar <kbd>C</kbd></button>
             <button class="secondary" id="tutorialBtn" type="button">Tutorial</button>
             <button class="secondary sound-button" id="soundBtn" aria-pressed="true">Sound on <kbd>M</kbd></button>
+            <button class="secondary" data-theme-toggle type="button" aria-pressed="false" title="Use softer, darker colors for nighttime play">Dark UI: off</button>
             <button class="secondary quiet-button" id="resetBestBtn">Reset best</button>
           </div>
         </main>
@@ -2111,6 +2189,7 @@
               <div class="control-row"><span>Move</span><span class="key-group"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>or arrows</span></span></div>
               <div class="control-row"><span>Dash / smash</span><kbd>SPACE</kbd></div>
               <div class="control-row"><span>Hold to swing · release to launch</span><kbd>E</kbd></div>
+              <div class="control-row"><span>Ride rail / use linked gate</span><kbd>F</kbd></div>
               <div class="control-row"><span>Accept rival challenge</span><kbd>R</kbd></div>
               <div class="control-row"><span>Pause / resume</span><kbd>P</kbd></div>
               <div class="control-row"><span>Close overlay</span><kbd>ESC</kbd></div>
@@ -2122,6 +2201,8 @@
               <div class="legend-item"><span class="dot" style="color:#d8766d;background:#d8766d"></span>Hostiles</div>
               <div class="legend-item"><span class="dot" style="color:#f0ce8f;background:#f0ce8f"></span>Core</div>
               <div class="legend-item"><span class="dot" style="color:#78dfcb;background:#78dfcb"></span>Slingshot beacon</div>
+              <div class="legend-item"><span class="dot" style="color:#72dce5;background:#72dce5"></span>Rail · F at a stop</div>
+              <div class="legend-item"><span class="dot" style="color:#c19cff;background:#c19cff"></span>Linked gate · F</div>
               <div class="legend-item"><span class="dot" style="color:#e8e8dc;background:#e8e8dc"></span>You</div>
             </div>
           </section>
@@ -2173,6 +2254,23 @@
   <script>
     (() => {
       "use strict";
+
+      const themeButtons = document.querySelectorAll("[data-theme-toggle]");
+      function applyUITheme(dark) {
+        document.documentElement.dataset.uiTheme = dark ? "dark" : "light";
+        for (const button of themeButtons) {
+          button.setAttribute("aria-pressed", String(dark));
+          button.textContent = `Dark UI: ${dark ? "on" : "off"}`;
+        }
+      }
+      applyUITheme(document.documentElement.dataset.uiTheme === "dark");
+      for (const button of themeButtons) {
+        button.addEventListener("click", () => {
+          const dark = document.documentElement.dataset.uiTheme !== "dark";
+          applyUITheme(dark);
+          try { localStorage.setItem("coreCourierUITheme", dark ? "dark" : "light"); } catch { /* Keep the toggle usable without storage. */ }
+        });
+      }
 
       const canvas = document.getElementById("game");
       const ctx = canvas.getContext("2d");
@@ -2292,6 +2390,9 @@
 
       const WORLD_AREA_SCALE = Math.sqrt(20);
       const world = { w: 0, h: 0, key: "central" };
+      // Layout coordinates are measured from the core; geometry stays stable on resize.
+      let mapLayout = null;
+      const transit = { ride: null, cooldown: 0 };
       const camera = { x: 0, y: 0 };
       let zones = [];
 
@@ -2487,12 +2588,64 @@
       };
 
       const WORLDS = {
-        central: { name: "Central Arcology", subtitle: "Balanced map with mixed sectors.", tint: "#f3b35b", zoneMix: ["static", "overgrowth", "danger", "repair", "broken"] },
-        verdant: { name: "Verdant Expanse", subtitle: "A huge living grid with more cargo growth and heavy movement drag.", tint: "#8be28f", zoneMix: ["overgrowth", "overgrowth", "repair", "danger", "static"] },
-        foundry: { name: "Redbelt Foundry", subtitle: "High-value cells and hotter enemy pressure.", tint: "#ff766d", zoneMix: ["danger", "danger", "static", "broken", "repair"] },
-        glass: { name: "Glass Garden", subtitle: "Bright repair lanes, fragile routes, and long open paths.", tint: "#7fc7ff", zoneMix: ["repair", "repair", "static", "overgrowth", "broken"] },
-        null: { name: "Null Marsh", subtitle: "Corrupted sectors with better payouts but unstable core pressure.", tint: "#c19cff", zoneMix: ["broken", "broken", "danger", "static", "overgrowth"] },
-        depot: { name: "Amber Depot", subtitle: "Cleaner cargo lanes built for combo deposits.", tint: "#ffd38a", zoneMix: ["repair", "overgrowth", "static", "danger", "danger"] }
+        central: { name: "Central Arcology", subtitle: "City blocks around a delivery plaza. Ride the cross-city express or cut through linked courtyards.", tint: "#f3b35b", zoneMix: ["static", "overgrowth", "danger", "repair", "broken"] },
+        verdant: { name: "Verdant Expanse", subtitle: "Walled gardens and winding nursery paths. The canopy rail skips the long way around.", tint: "#8be28f", zoneMix: ["overgrowth", "overgrowth", "repair", "danger", "static"] },
+        foundry: { name: "Redbelt Foundry", subtitle: "Furnace halls split the floor into narrow service lanes. Cross the works on the slagline.", tint: "#ff766d", zoneMix: ["danger", "danger", "static", "broken", "repair"] },
+        glass: { name: "Glass Garden", subtitle: "Crystal galleries open into broad courts. Take the perimeter rail between observatories.", tint: "#7fc7ff", zoneMix: ["repair", "repair", "static", "overgrowth", "broken"] },
+        null: { name: "Null Marsh", subtitle: "Sunken ruins divide crooked causeways. Paired rifts connect the two remote shores.", tint: "#c19cff", zoneMix: ["broken", "broken", "danger", "static", "overgrowth"] },
+        depot: { name: "Amber Depot", subtitle: "Warehouse rows, loading alleys, and container chicanes. Freight rails link the outer yards.", tint: "#ffd38a", zoneMix: ["repair", "overgrowth", "static", "danger", "danger"] }
+      };
+
+      // [x, y, width, height, kind]. Blocks are solid, including while dashing.
+      const MAPS = {
+        central: {
+          title: "The civic grid", floor: "#19252e", wall: "#354652", edge: "#9aabac",
+          blocks: [[-580,-470,340,300,"tower"],[240,-470,340,300,"tower"],[-580,190,340,300,"tower"],[240,190,340,300,"tower"],[-1110,-720,300,460,"tower"],[810,-720,300,460,"tower"],[-1110,260,300,460,"tower"],[810,260,300,460,"tower"],[-530,-900,300,170,"tower"],[230,730,300,170,"tower"],[-180,-655,110,110,"monument"],[70,545,110,110,"monument"]],
+          paths: [[[-1250,0],[1250,0]],[ [0,-1000],[0,1000] ],[[-710,-1030],[-710,1030],[710,1030],[710,-1030],[-710,-1030]]],
+          rails: [{name:"Crosstown",points:[[-1220,-120],[-710,-120],[0,-120],[710,-120],[1220,-120]]}],
+          portals: [{name:"Courtyard link",a:[-700,670],b:[700,-670]}],
+          landmarks: [[0,-790,"SIGNAL SPIRE","spire"],[-700,0,"WEST ARCADE","plaza"],[700,0,"EAST ARCADE","plaza"],[0,800,"CIVIC STEPS","plaza"]]
+        },
+        verdant: {
+          title: "Nursery switchbacks", floor:"#192e2b", wall:"#304e3c", edge:"#80ab75",
+          blocks:[[-1030,-730,660,160,"hedge"],[-1030,-570,160,370,"hedge"],[-610,-350,420,140,"hedge"],[240,-760,160,550,"hedge"],[400,-760,650,160,"hedge"],[690,-370,360,160,"hedge"],[-1050,200,650,160,"hedge"],[-560,360,160,430,"hedge"],[-1050,630,330,160,"hedge"],[210,230,160,560,"hedge"],[370,630,670,160,"hedge"],[650,230,390,160,"hedge"],[-160,-980,320,150,"hedge"]],
+          paths:[[[-1190,0],[0,0],[1190,0]],[[0,-750],[0,1030]],[[-1190,-900],[-1190,500],[-640,500],[-640,950],[1200,950],[1200,500],[530,500],[530,-490]],[[-730,-490],[-730,-110],[0,-110]]],
+          rails:[{name:"Canopy line",points:[[-1170,900],[-1170,110],[-1170,-920],[0,-1100],[1170,-920],[1170,110],[1170,900]]}],
+          portals:[{name:"Root gate",a:[-730,-110],b:[530,500]}],
+          landmarks:[[-720,500,"SEED VAULT","tree"],[550,-490,"THE OLD CANOPY","tree"],[0,-1080,"NURSERY GATE","plaza"],[0,950,"POLLEN COURT","tree"]]
+        },
+        foundry: {
+          title:"Through the furnace halls",floor:"#30252a",wall:"#594039",edge:"#bc8064",
+          blocks:[[-1060,-800,340,660,"furnace"],[-540,-800,340,470,"furnace"],[200,-800,340,470,"furnace"],[720,-800,340,660,"furnace"],[-1060,140,340,660,"furnace"],[-540,330,340,470,"furnace"],[200,330,340,470,"furnace"],[720,140,340,660,"furnace"],[-550,-90,100,180,"crate"],[450,-90,100,180,"crate"],[-180,-1040,360,110,"furnace"],[-180,930,360,110,"furnace"]],
+          paths:[[[-1240,0],[1240,0]],[[0,-850],[0,850]],[[-630,-1120],[-630,1120]],[[630,-1120],[630,1120]],[[-1190,-1120],[1190,-1120]], [[-1190,1120],[1190,1120]]],
+          rails:[{name:"Slagline",points:[[-1200,-970],[-630,-970],[-630,0],[-630,970],[0,1130],[630,970],[630,0],[630,-970],[1200,-970]]}],
+          portals:[{name:"Service lift",a:[0,-865],b:[0,865]}],
+          landmarks:[[-630,0,"WEST WORKS","plaza"],[630,0,"EAST WORKS","plaza"],[0,-865,"PRESSURE STACK","spire"],[0,865,"COOLING STATION","plaza"]]
+        },
+        glass: {
+          title:"The mirror galleries",floor:"#1b2c39",wall:"#304e65",edge:"#91c4dc",
+          blocks:[[-970,-700,660,110,"glass"],[-970,-590,110,360,"glass"],[310,-700,660,110,"glass"],[860,-590,110,360,"glass"],[-970,590,660,110,"glass"],[-970,230,110,360,"glass"],[310,590,660,110,"glass"],[860,230,110,360,"glass"],[-570,-340,240,120,"crystal"],[330,220,240,120,"crystal"],[-580,290,130,130,"crystal"],[450,-420,130,130,"crystal"],[-150,-960,300,110,"glass"],[-150,850,300,110,"glass"]],
+          paths:[[[-1220,0],[1220,0]],[[0,-760],[0,760]],[[-1140,-1060],[1140,-1060],[1140,1060],[-1140,1060],[-1140,-1060]],[[-740,-460],[-740,0],[740,0],[740,460]],[[-740,460],[-740,0],[740,0],[740,-460]]],
+          rails:[{name:"Prism circuit",points:[[-1150,-850],[0,-1120],[1150,-850],[1150,850],[0,1120],[-1150,850],[-1150,-850]]}],
+          portals:[{name:"Mirror pair",a:[-700,-440],b:[700,440]},{name:"Refraction pair",a:[700,-440],b:[-700,440]}],
+          landmarks:[[-700,-440,"NORTH LENS","crystal"],[700,440,"SOUTH LENS","crystal"],[0,-1100,"OBSERVATORY","spire"],[0,1100,"REFLECTING COURT","plaza"]]
+        },
+        null: {
+          title:"The broken causeways",floor:"#252439",wall:"#363548",edge:"#8d81a9",
+          blocks:[[-1080,-840,560,340,"ruin"],[-1080,-340,310,590,"ruin"],[-600,-310,270,120,"ruin"],[-1080,500,650,310,"ruin"],[-430,670,220,140,"ruin"],[320,-850,760,270,"ruin"],[770,-580,310,340,"ruin"],[320,-430,280,170,"ruin"],[280,220,280,390,"ruin"],[740,220,340,590,"ruin"],[-150,-1010,300,130,"ruin"],[-170,900,340,130,"ruin"]],
+          paths:[[[-1200,370],[-640,370],[-640,0],[0,0],[650,0],[650,690],[650,1030]],[[0,-800],[0,0],[-260,450],[-260,600]],[[-1200,-420],[-1200,-1040],[-260,-1040],[-260,-800],[170,-800],[170,-100],[650,-100],[650,-490]],[[650,-100],[1200,-100]]],
+          rails:[{name:"Ghost causeway",points:[[-1200,1030],[-260,1100],[-260,860],[0,860],[0,740],[0,160],[0,-200],[170,-490],[650,-490],[650,-100],[1200,-100]]}],
+          portals:[{name:"Shore rift",a:[-1200,-1040],b:[1200,1040]},{name:"Ruin rift",a:[-640,370],b:[650,-490]}],
+          landmarks:[[-640,370,"DROWNED BELL","spire"],[650,-490,"LAST LIGHTHOUSE","spire"],[-1200,-1040,"WEST SHORE","plaza"],[1200,1040,"EAST SHORE","plaza"]]
+        },
+        depot: {
+          title:"Freight yard maze",floor:"#2c2926",wall:"#554b3a",edge:"#b4a17b",
+          blocks:[[-1040,-800,320,580,"warehouse"],[-540,-800,320,420,"warehouse"],[220,-800,320,420,"warehouse"],[720,-800,320,580,"warehouse"],[-1040,220,320,580,"warehouse"],[-540,380,320,420,"warehouse"],[220,380,320,420,"warehouse"],[720,220,320,580,"warehouse"],[-550,-190,120,100,"crate"],[-380,100,160,90,"crate"],[230,-190,160,90,"crate"],[430,90,120,100,"crate"],[-150,-1040,300,120,"warehouse"],[-150,920,300,120,"warehouse"]],
+          paths:[[[-1240,0],[1240,0]],[[0,-850],[0,850]],[[-630,-1120],[-630,1120]],[[630,-1120],[630,1120]],[[-1200,-1120],[1200,-1120]], [[-1200,1120],[1200,1120]]],
+          rails:[{name:"West freight",points:[[-1200,-950],[-630,-950],[-630,0],[-630,950],[-1200,950]]},{name:"East freight",points:[[1200,950],[630,950],[630,0],[630,-950],[1200,-950]]}],
+          portals:[{name:"Dispatch link",a:[0,-870],b:[0,870]}],
+          landmarks:[[-630,0,"LOADING BAY A","plaza"],[630,0,"LOADING BAY B","plaza"],[0,-870,"DISPATCH TOWER","spire"],[0,870,"SORTING COURT","plaza"]]
+        }
       };
 
       const CONTRACT_BUFFS = [
@@ -2765,7 +2918,7 @@
       }
 
       function popScore() {
-        if (!reducedMotion) scoreText.animate?.([{ transform: "scale(1.3)", color: "#ce425e" }, { transform: "scale(1)", color: "#22283b" }], { duration: 260, easing: "cubic-bezier(.2,1.5,.4,1)" });
+        if (!reducedMotion) scoreText.animate?.([{ transform: "scale(1.3)", color: "#ce425e" }, { transform: "scale(1)", color: getComputedStyle(scoreText).color }], { duration: 260, easing: "cubic-bezier(.2,1.5,.4,1)" });
       }
 
       function updateJuice(dt) {
@@ -2957,6 +3110,7 @@
         if (e.code === "KeyE" && !e.repeat) attachSling();
         if (e.code === "KeyR" && !e.repeat) acceptRival();
         if (e.code === "Space") dash();
+        if (e.code === "KeyF" && !e.repeat) useMapTransit();
         if (e.code === "KeyT" && game.mode === "capture") openTeleportMenu();
       }, { passive: false });
 
@@ -3155,6 +3309,7 @@
         player.dashId = 0;
         player.angle = -Math.PI / 2;
         player.cargo = [];
+        resetCargoTrail();
         cargoSignature = "";
         player.capacity = mode === "contract" ? contractConfig.capacity : mode === "practice" ? 6 : mode === "capture" ? 5 : 5;
         player.dashCooldown = 0;
@@ -3738,16 +3893,115 @@
       }
 
       // The game and showroom share this renderer; these objects are cosmetic only.
-      function makeSkinFx() { return { trails:[], bursts:[], clock:0, wasDashing:false, prevX:null, prevY:null }; }
+      function makeSkinFx() { return { trails:[], bursts:[], flameBend:0, prevAngle:null, clock:0, wasDashing:false, dashAge:0, dashBlend:0, prevX:null, prevY:null }; }
       function resetSkinFx(state) { Object.assign(state, makeSkinFx()); }
 
+      // Follow distance along the actual flight path, not the ship's current
+      // rotation. Each parcel keeps its own position, velocity and heading.
+      function stepCargoTrail(dt) {
+        const length=Math.max(240,32+Math.max(player.capacity||0,player.cargo.length)*15+64);
+        let motion=player.cargoMotion;
+        if(!motion?.path || Math.hypot(player.x-motion.x,player.y-motion.y)>220) {
+          resetCargoTrail();
+          motion=player.cargoMotion={x:player.x,y:player.y,path:[
+            {x:player.x-Math.cos(player.angle)*length,y:player.y-Math.sin(player.angle)*length,d:0},
+            {x:player.x,y:player.y,d:length}
+          ]};
+        }
+        const path=motion.path, last=path[path.length-1];
+        const dx=player.x-last.x, dy=player.y-last.y, traveled=Math.hypot(dx,dy);
+        // Spatial samples keep the same curvature at different frame rates.
+        if(traveled>=.75) {
+          const count=Math.ceil(traveled/4);
+          for(let i=1;i<=count;i++) {
+            const t=i/count;
+            path.push({x:last.x+dx*t,y:last.y+dy*t,d:last.d+traveled*t});
+          }
+        }
+        motion.x=player.x;motion.y=player.y;
+        const head=path[path.length-1].d+(traveled<.75?traveled:0);
+        while(path.length>2 && path[1].d<head-length)path.shift();
+        const activity=clamp(Math.hypot(player.vx,player.vy)/500,0,1);
+        let cursor=path.length-1, lead=player;
+        player.cargo.forEach((item,idx)=>{
+          const distance=head-(32+idx*15);
+          while(cursor>1 && path[cursor-1].d>distance)cursor--;
+          const a=path[cursor-1], b=path[cursor];
+          const t=(distance-a.d)/(b.d-a.d||1);
+          const angle=Math.atan2(b.y-a.y,b.x-a.x);
+          const mass=Math.pow(CELL_TYPES[item.type].weight,.15);
+          const bob=reducedMotion?0:Math.sin(game.time*3.2-idx*.9)*(.65+activity*.9)/mass;
+          const targetX=lerp(a.x,b.x,t)-Math.sin(angle)*bob;
+          const targetY=lerp(a.y,b.y,t)+Math.cos(angle)*bob;
+          let p=item.flow;
+          if(!p || p.targetX===undefined) {
+            p=item.flow={x:targetX,y:targetY,vx:0,vy:0,angle,targetX,targetY};
+          } else if(dt>0) {
+            const omega=22/(mass*(1+idx*.045)), damping=reducedMotion?1:.78;
+            const decay=Math.exp(-omega*damping*dt);
+            // Solve in the moving target's frame, so lag does not stretch the
+            // row at cruising speed. Slight overshoot softens turns and stops.
+            for(const [key,velocity,target,oldTarget] of [["x","vx",targetX,p.targetX],["y","vy",targetY,p.targetY]]) {
+              const targetVelocity=(target-oldTarget)/dt;
+              const offset=p[key]-oldTarget, relativeVelocity=p[velocity]-targetVelocity;
+              if(damping===1) {
+                const impulse=(relativeVelocity+omega*offset)*dt;
+                p[key]=target+(offset+impulse)*decay;
+                p[velocity]=targetVelocity+(relativeVelocity-omega*impulse)*decay;
+              } else {
+                const frequency=omega*Math.sqrt(1-damping*damping);
+                const sine=Math.sin(frequency*dt), cosine=Math.cos(frequency*dt);
+                p[key]=target+decay*(offset*cosine+(relativeVelocity+omega*damping*offset)/frequency*sine);
+                p[velocity]=targetVelocity+decay*(relativeVelocity*cosine-(omega*damping*relativeVelocity+omega*omega*offset)/frequency*sine);
+              }
+            }
+            const offsetX=p.x-targetX, offsetY=p.y-targetY, error=Math.hypot(offsetX,offsetY);
+            const allowance=reducedMotion?4:12+Math.min(idx,8)*.5;
+            if(error>allowance) {
+              p.x=targetX+offsetX/error*allowance;p.y=targetY+offsetY/error*allowance;
+            }
+            p.targetX=targetX;p.targetY=targetY;
+          }
+          // Limit separation only; leave the tail free to bend around corners.
+          const gapX=p.x-lead.x, gapY=p.y-lead.y, gap=Math.hypot(gapX,gapY);
+          const limit=idx?24:46;
+          if(gap>limit) {
+            const nx=gapX/gap, ny=gapY/gap;
+            p.x=lead.x+nx*limit;p.y=lead.y+ny*limit;
+            const outward=(p.vx-lead.vx)*nx+(p.vy-lead.vy)*ny;
+            if(outward>0){p.vx-=nx*outward;p.vy-=ny*outward;}
+          }
+          const roll=reducedMotion?0:Math.sin(game.time*3.2-idx*.9)*.055;
+          const turn=Math.atan2(Math.sin(angle+roll-p.angle),Math.cos(angle+roll-p.angle));
+          p.angle+=turn*(1-Math.exp(-12/mass*dt));
+          lead=p;
+        });
+      }
+
+      function resetCargoTrail() {
+        player.cargoMotion=null;
+        for (const item of player.cargo) delete item.flow;
+      }
+
       function stepSkinFx(state, ship, skin, dt, time) {
+        if (state.prevX !== null && Math.hypot(ship.x-state.prevX,ship.y-state.prevY)>220) resetSkinFx(state);
+        const turn=state.prevAngle!==null && dt>0
+          ? Math.atan2(Math.sin(ship.angle-state.prevAngle),Math.cos(ship.angle-state.prevAngle))/dt : 0;
+        const tip=reducedMotion?0:clamp(-turn*.35,-1.8,1.8)+Math.sin(time*19)*.22;
+        state.flameBend=lerp(state.flameBend,tip,1-Math.exp(-18*dt));
+        state.prevAngle=ship.angle;
         for (const list of [state.trails,state.bursts]) {
           for (let i=list.length-1;i>=0;i--) { list[i].life-=dt; if(list[i].life<=0)list.splice(i,1); }
         }
+        for (const point of state.trails) {
+          point.x += point.vx*dt; point.y += point.vy*dt;
+          const drag=Math.exp(-2.5*dt);point.vx*=drag;point.vy*=drag;
+        }
         const dashing = ship.dashTime>0;
-        if (skin.rank>=2 && ((dashing && !state.wasDashing) || (!dashing && state.wasDashing && skin.rank>=3))) {
-          const arrival = !dashing, life = reducedMotion ? .4 : skin.rank>=4 ? 1.15 : .8;
+        state.dashAge=dashing?(state.wasDashing?state.dashAge+dt:0):state.dashAge+dt;
+        state.dashBlend=lerp(state.dashBlend,dashing?1:0,1-Math.exp(-(dashing?24:11)*dt));
+        if (skin.rank>=2 && dashing!==state.wasDashing) {
+          const arrival = !dashing, life = reducedMotion ? .4 : (skin.rank>=4 ? 1.15 : .85)*(arrival?.8:1);
           state.bursts.push({ x:ship.x,y:ship.y,angle:ship.angle,life,max:life,arrival,seed:Math.random()*6.28 });
           if(state.bursts.length>6)state.bursts.shift();
         }
@@ -3759,10 +4013,11 @@
         const count=Math.min(4,Math.floor(state.clock/interval));
         if(count)state.clock%=interval;
         for(let i=0;i<count;i++) {
-          const t=(i+1)/count, angle=ship.angle;
+          const t=(i+1)/count, angle=ship.angle, drift=reducedMotion?0:6;
           const life=(reducedMotion?.28:.32+skin.rank*.13)+(dashing&&!reducedMotion?.16:0);
           state.trails.push({ x:lerp(state.prevX??ship.x,ship.x,t)-Math.cos(angle)*15,
             y:lerp(state.prevY??ship.y,ship.y,t)-Math.sin(angle)*15, angle,life,max:life,
+            vx:-Math.cos(angle)*drift,vy:-Math.sin(angle)*drift,
             seed:Math.random()*6.28, color:skin.trail[Math.floor(time*20+i)%skin.trail.length],
             dashing,length:(dashing?34:12)+skin.rank*(dashing?12:4) });
         }
@@ -3786,6 +4041,26 @@
         context.lineTo(-r*.5,0);context.lineTo(-r*.95,r*.85);context.closePath();
       }
 
+      // Pointed feathers share a quill and little barbs, rather than a flat oval.
+      function skinFeather(context,x,y,length,width,angle,color,detail=true) {
+        context.save();context.translate(x,y);context.rotate(angle);
+        context.fillStyle=color;context.strokeStyle=color;
+        context.beginPath();context.moveTo(0,0);
+        context.bezierCurveTo(length*.2,-width,length*.75,-width*.8,length,0);
+        context.bezierCurveTo(length*.65,width*.65,length*.18,width*.9,0,0);context.fill();
+        if(detail) {
+          context.strokeStyle="#fff4dc";context.lineWidth=.65;
+          context.beginPath();context.moveTo(length*.08,0);context.quadraticCurveTo(length*.5,-width*.12,length*.94,0);
+          for(let i=1;i<=3;i++) {
+            const at=length*(.2+i*.15),spread=width*Math.sin((.2+i*.15)*Math.PI)*.65;
+            context.moveTo(at,0);context.lineTo(at-length*.13,-spread);
+            context.moveTo(at,0);context.lineTo(at-length*.1,spread);
+          }
+          context.stroke();
+        }
+        context.restore();
+      }
+
       function drawSkinFx(context,state,ship,skin,time) {
         context.save();context.globalCompositeOperation="lighter";context.lineCap="round";context.lineJoin="round";
         for(const point of state.trails) {
@@ -3801,10 +4076,13 @@
             case "ice":
               context.translate(-L*.3,sway);context.rotate(point.seed+fade);
               context.beginPath();context.moveTo(-7,0);context.lineTo(0,-3);context.lineTo(7,0);context.lineTo(0,3);context.closePath();context.fill();break;
-            case "petal":case "seraph":case "phoenix":
+            case "petal":
               context.translate(-L*.25,sway*1.7);context.rotate(point.seed+fade*2);
-              context.beginPath();context.ellipse(0,0,point.dashing?3:2,point.dashing?9:5,0,0,Math.PI*2);context.fill();
-              if(skin.effect==="phoenix") { context.beginPath();context.moveTo(0,-7);context.lineTo(0,7);context.strokeStyle="#fff1ba";context.lineWidth=.8;context.stroke(); }break;
+              context.beginPath();context.moveTo(0,-7);context.bezierCurveTo(7,-4,5,3,0,8);context.bezierCurveTo(-4,2,-6,-5,0,-7);context.fill();
+              if(point.dashing){context.strokeStyle="#ffefdc";context.lineWidth=.6;context.beginPath();context.moveTo(0,-4);context.quadraticCurveTo(2,0,0,5);context.stroke();}break;
+            case "seraph":case "phoenix":
+              skinFeather(context,-L*.25,sway*1.7,point.dashing?18:10,point.dashing?4:2,point.seed+fade*(skin.effect==="phoenix"?3:1.5),point.color,point.dashing);
+              break;
             case "storm":case "ion":
               context.beginPath();context.moveTo(0,0);context.lineTo(-L*.3,sway);context.lineTo(-L*.52,-sway*.4);context.lineTo(-L,Math.sin(point.seed)*4);context.stroke();
               if(skin.effect==="storm") {context.beginPath();context.moveTo(-L*.3,sway);context.lineTo(-L*.6,sway+8);context.stroke();}break;
@@ -3832,6 +4110,19 @@
               context.beginPath();context.moveTo(2,0);context.lineTo(-L*.7,sway*.4);context.lineTo(-L*.3,2);context.closePath();context.fill();break;
             default:
               context.beginPath();context.moveTo(0,0);context.lineTo(-L,0);context.stroke();
+          }
+          if(point.dashing && skin.rank>=2 && Math.sin(point.seed)>.45 && !reducedMotion) {
+            // Small secondary details follow the wake without raising its sample budget.
+            context.globalAlpha=a*a*.55;context.strokeStyle=skin.trail[1];context.lineWidth=.7;
+            if(skin.effect==="storm") {
+              context.beginPath();context.moveTo(-L*.3,sway);context.lineTo(-L*.45,sway*2.5);context.lineTo(-L*.7,sway*2);context.stroke();
+            } else if(skin.effect==="chrono") {
+              context.beginPath();context.arc(-L*.4,0,10+fade*8,point.seed,point.seed+1.2);context.stroke();
+            } else if(["aurora","singularity","dragon"].includes(skin.effect)) {
+              context.beginPath();context.moveTo(0,-sway);context.bezierCurveTo(-L*.2,sway*2,-L*.7,-sway*2,-L,sway);context.stroke();
+            } else if(["comet","solar","nova"].includes(skin.effect)) {
+              skinStar(context,-L*.75,sway*2,2.5*a,4,point.seed+fade);context.fill();
+            }
           }
           context.restore();
         }
@@ -3934,11 +4225,17 @@
         glow.addColorStop(0,hexToRgba(ship.dashTime>0?skin.dash:skin.glow,.22));glow.addColorStop(1,hexToRgba(skin.glow,0));
         context.fillStyle=glow;context.beginPath();context.arc(ship.x,ship.y,37,0,Math.PI*2);context.fill();
         context.translate(ship.x,ship.y);context.rotate(ship.angle);
-        const flame=moving?20+Math.min(speed,1000)*.045+(reducedMotion?0:Math.sin(time*55)*7):7;
+        const flame=moving?20+Math.min(speed,1000)*.045+(reducedMotion?0:Math.sin(time*27)*.6):7;
+        const bend=reducedMotion?0:clamp(options.flameBend||0,-2.1,2.1)*(moving?1:.3);
+        const root=-r*.5, tip=-r-flame, shoulder=root+(tip-root)*.72;
+        // The nozzle and first three quarters stay straight; only the tip bends.
         context.fillStyle=options.rushing?"#64ffe0":skin.dash;context.globalAlpha=.7;
-        context.beginPath();context.moveTo(-r*.5,-6);context.lineTo(-r-flame,0);context.lineTo(-r*.5,6);context.fill();
+        context.beginPath();context.moveTo(root,-6);context.lineTo(shoulder,-1.7);
+        context.quadraticCurveTo(tip+4,-.6,tip,bend);
+        context.quadraticCurveTo(tip+4,.6,shoulder,1.7);
+        context.lineTo(root,6);context.closePath();context.fill();
         context.globalAlpha=1;context.fillStyle="#fff3cb";
-        context.beginPath();context.moveTo(-r*.5,-3);context.lineTo(-r-flame*.6,0);context.lineTo(-r*.5,3);context.fill();
+        context.beginPath();context.moveTo(root,-2.5);context.lineTo(-r-flame*.6,0);context.lineTo(root,2.5);context.closePath();context.fill();
         if(!reducedMotion)context.scale(ship.dashTime>0?1.28:1+Math.sin(time*10)*(moving?.025:.012),ship.dashTime>0?.82:1);
         context.globalAlpha=options.invBlink?.5:1;context.fillStyle=skin.body;context.strokeStyle="#192134";context.lineWidth=3;
         skinShipPath(context,r);context.fill();context.stroke();
@@ -3965,7 +4262,7 @@
             const dx = player.x - c.x;
             const dy = player.y - c.y;
             const d = Math.hypot(dx, dy) || 1;
-            if (d < pullRange && cargoSlotsUsed() < player.capacity) {
+            if (d < pullRange && cargoSlotsUsed() < player.capacity && mapLineClear(c,player,c.r)) {
               const pull = (1 - d / pullRange) * (80 + player.trailPull);
               c.x += dx / d * pull * dt;
               c.y += dy / d * pull * dt;
@@ -4086,9 +4383,8 @@
           card.style.setProperty("--route-line", hexToRgba(worldDef.tint, .54));
           const buffs = contract.buffs.map(b => `<div class="route-pill good">+ ${b.label}</div>`).join("");
           const cons = contract.cons.map(c => `<div class="route-pill bad">– ${c.label}</div>`).join("");
-          const sigil = (worldDef.name || "?").split(" ").map(w => w[0]).join("").slice(0, 2).toUpperCase();
           const reward = `Depth ${game.routeDepth + 2} • +${6 + game.routeDepth * 2} contracts possible`;
-          card.innerHTML = `<div><div class="route-sigil">${sigil}</div><div class="route-world" style="color:${worldDef.tint}">${worldDef.name}</div><strong>${contract.title}</strong><p class="route-desc">${contract.desc}</p><div class="route-reward">${reward}</div></div><div class="route-list">${buffs || "<div class='route-pill good'>+ Balanced route</div>"}${cons || "<div class='route-pill bad'>– No major drawback</div>"}</div>`;
+          card.innerHTML = `<div>${mapPreview(contract.worldKey)}<div class="route-world" style="color:${worldDef.tint}">${worldDef.name}</div><strong>${contract.title}</strong><p class="route-desc">${worldDef.subtitle}</p><div class="route-reward">${reward}</div></div><div class="route-list">${buffs || "<div class='route-pill good'>+ Balanced route</div>"}${cons || "<div class='route-pill bad'>– No major drawback</div>"}</div>`;
           card.addEventListener("click", () => start("contract", contract, true));
           routeGrid.appendChild(card);
         }
@@ -4131,13 +4427,182 @@
         const scale = game.mode === "capture" ? WORLD_AREA_SCALE * 1.28 : WORLD_AREA_SCALE;
         const safeW = Math.max(2600, Math.floor(W * scale));
         const safeH = Math.max(2200, Math.floor(Math.max(700, H) * scale));
-        world.w = safeW;
-        world.h = safeH;
+        world.w = game.mode === "contract" ? 3000 : safeW;
+        world.h = game.mode === "contract" ? 2600 : safeH;
         world.key = worldKey || "central";
         if (WORLDS[world.key]) WORLDS[world.key].key = world.key;
         core.x = world.w / 2;
         core.y = world.h / 2;
+        buildMapLayout(game.mode === "contract" ? world.key : null);
         zones = game.mode === "capture" ? [] : generateZones(world.key);
+      }
+
+      function mapPreview(key) {
+        const def=MAPS[key];if(!def)return "";
+        const path=points=>points.map(p=>p.join(",")).join(" ");
+        return `<svg viewBox="-1500 -1300 3000 2600" role="img" aria-label="${WORLDS[key].name} layout: buildings, rails and linked gates" style="display:block;width:100%;height:135px;margin-bottom:14px;border-radius:8px;background:${def.floor}">
+          ${def.paths.map(p=>`<polyline points="${path(p)}" fill="none" stroke="#a9b5b5" stroke-opacity=".18" stroke-width="95"/>`).join("")}
+          ${def.blocks.map(([x,y,w,h])=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${def.wall}" stroke="${def.edge}" stroke-width="12"/>`).join("")}
+          ${def.rails.map(r=>`<polyline points="${path(r.points)}" fill="none" stroke="#72dce5" stroke-width="22"/>${r.points.map(([x,y])=>`<circle cx="${x}" cy="${y}" r="32" fill="#72dce5"/>`).join("")}`).join("")}
+          ${def.portals.map(p=>`<path d="M${p.a.join(" ")} L${p.b.join(" ")}" stroke="#c19cff" stroke-opacity=".45" stroke-width="12" stroke-dasharray="30 40"/>${[p.a,p.b].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="45" fill="none" stroke="#c19cff" stroke-width="20"/>`).join("")}`).join("")}
+          <circle r="75" fill="#ffd38a"/>
+        </svg>`;
+      }
+
+      function buildMapLayout(key) {
+        transit.ride = null; transit.cooldown = 0;
+        const def = key ? MAPS[key] : null;
+        if (!def) { mapLayout = null; return; }
+        const point = p => ({ x: core.x + p[0], y: core.y + p[1] });
+        mapLayout = {
+          ...def, key,
+          walls: def.blocks.map(([x,y,w,h,kind]) => ({ x:core.x+x, y:core.y+y, w,h,kind })),
+          paths: def.paths.map(path => path.map(point)),
+          rails: def.rails.map(rail => ({ ...rail, points:rail.points.map(point) })),
+          portals: def.portals.flatMap((pair,i) => [
+            { ...point(pair.a), name:pair.name, pair:i, to:point(pair.b) },
+            { ...point(pair.b), name:pair.name, pair:i, to:point(pair.a) }
+          ]),
+          landmarks: def.landmarks.map(([x,y,name,kind]) => ({...point([x,y]),name,kind})),
+          nodes: [], fields: new Map()
+        };
+        // A shared visibility graph routes enemies and rivals around actual buildings.
+        // Clearance fits the largest brute and keeps corners from snagging smaller ships.
+        for (const b of mapLayout.walls) for (const [x,y] of [[b.x-34,b.y-34],[b.x+b.w+34,b.y-34],[b.x-34,b.y+b.h+34],[b.x+b.w+34,b.y+b.h+34]]) {
+          if (mapPointClear(x,y,31)) mapLayout.nodes.push({x,y,links:[]});
+        }
+        const nodes = mapLayout.nodes;
+        for (let i=0;i<nodes.length;i++) for (let j=i+1;j<nodes.length;j++) {
+          if (!mapLineClear(nodes[i],nodes[j],30)) continue;
+          const cost=dist(nodes[i],nodes[j]);
+          nodes[i].links.push({index:j,cost});nodes[j].links.push({index:i,cost});
+        }
+      }
+
+      function mapPointClear(x,y,r=18) {
+        return !mapLayout || !mapLayout.walls.some(b => x>b.x-r && x<b.x+b.w+r && y>b.y-r && y<b.y+b.h+r);
+      }
+
+      function mapLineClear(a,b,r=18) {
+        if (!mapLayout) return true;
+        // Slab intersection against inflated rectangles also catches fast dashes.
+        return !mapLayout.walls.some(w => {
+          let lo=0,hi=1;
+          for (const [start,delta,min,max] of [[a.x,b.x-a.x,w.x-r,w.x+w.w+r],[a.y,b.y-a.y,w.y-r,w.y+w.h+r]]) {
+            if (Math.abs(delta)<.0001) { if(start<=min || start>=max)return false; }
+            else { const t1=(min-start)/delta,t2=(max-start)/delta;lo=Math.max(lo,Math.min(t1,t2));hi=Math.min(hi,Math.max(t1,t2));if(lo>hi)return false; }
+          }
+          return hi>=0 && lo<=1;
+        });
+      }
+
+      function mapSafePoint(x,y,r=22) {
+        x=clamp(x,60,world.w-60);y=clamp(y,60,world.h-60);
+        if (mapPointClear(x,y,r)) return {x,y};
+        // Find nearby open paving rather than placing cargo, gates, or ships in a wall.
+        for(let radius=40;radius<=800;radius+=40) for(let i=0;i<16;i++) {
+          const a=i*Math.PI/8,px=clamp(x+Math.cos(a)*radius,60,world.w-60),py=clamp(y+Math.sin(a)*radius,60,world.h-60);
+          if(mapPointClear(px,py,r))return {x:px,y:py};
+        }
+        return {x:core.x,y:core.y+88};
+      }
+
+      function moveMapBody(body,dx,dy) {
+        const r=body.r||14;
+        const steps=Math.max(1,Math.ceil(Math.max(Math.abs(dx),Math.abs(dy))/Math.max(6,r*.65)));
+        let hit=false;
+        // Small swept steps keep dashes, lunges, and knockback on the correct side.
+        for(let i=0;i<steps;i++) {
+          const nx=body.x+dx/steps,ny=body.y+dy/steps;
+          if(mapPointClear(nx,body.y,r))body.x=nx;else {hit=true;if(body===player)body.vx=0;}
+          if(mapPointClear(body.x,ny,r))body.y=ny;else {hit=true;if(body===player)body.vy=0;}
+        }
+        if(hit && body===player) {player.dashTime=0;cardFx.slipstream=0;releaseSling(false);sling.boostTime=0;}
+        return hit;
+      }
+
+      function mapSteer(body,target) {
+        if(!mapLayout || mapLineClear(body,target,body.r+4))return target;
+        const nodes=mapLayout.nodes;
+        const key=`${Math.round(target.x/80)},${Math.round(target.y/80)}`;
+        let field=mapLayout.fields.get(key);
+        if(!field || game.time-field.time>.65 || dist(field.target,target)>60) {
+          const costs=nodes.map(n=>mapLineClear(n,target,30)?dist(n,target):Infinity),next=nodes.map(()=>-1),visited=new Set();
+          for(let count=0;count<nodes.length;count++) {
+            let best=-1,bestCost=Infinity;
+            for(let i=0;i<nodes.length;i++)if(!visited.has(i)&&costs[i]<bestCost){best=i;bestCost=costs[i];}
+            if(best<0)break;visited.add(best);
+            for(const link of nodes[best].links)if(bestCost+link.cost<costs[link.index]){costs[link.index]=bestCost+link.cost;next[link.index]=best;}
+          }
+          field={costs,next,time:game.time,target:{x:target.x,y:target.y}};
+          if(mapLayout.fields.size>40)mapLayout.fields.clear();
+          mapLayout.fields.set(key,field);
+        }
+        let best=target,cost=Infinity;
+        for(let i=0;i<nodes.length;i++) {
+          const total=dist(body,nodes[i])+field.costs[i];
+          if(total<cost && mapLineClear(body,nodes[i],body.r+3)){
+            best=dist(body,nodes[i])<12 && field.next[i]>=0 ? nodes[field.next[i]] : nodes[i];cost=total;
+          }
+        }
+        return best;
+      }
+
+      function nearestMapStation() {
+        if(!mapLayout)return null;
+        let best=null,range=70;
+        for(const rail of mapLayout.rails)rail.points.forEach((p,index)=>{
+          const d=dist(player,p);if(d<range){range=d;best={rail,index,...p};}
+        });
+        return best;
+      }
+
+      function useMapTransit() {
+        if(!mapLayout || tutorial.active)return;
+        if(transit.ride){transit.ride=null;transit.cooldown=.5;showToast("Off the rail.",.8);return;}
+        if(transit.cooldown>0)return;
+        const portal=mapLayout.portals.find(p=>dist(player,p)<72);
+        if(portal) {
+          releaseSling(false);transit.cooldown=1;
+          burst(player.x,player.y,20,"#c19cff",1.8);
+          Object.assign(player,mapSafePoint(portal.to.x,portal.to.y,player.r));
+          player.vx=0;player.vy=0;player.prevX=player.x;player.prevY=player.y;player.dashTime=0;
+          resetSkinFx(liveSkinFx);resetCargoTrail();updateCamera(1);
+          burst(player.x,player.y,24,"#c19cff",1.8);showToast(portal.name,1.1);sfx("dash");return;
+        }
+        const station=nearestMapStation();
+        if(!station){showToast("Get close to a rail stop or a violet gate, then press F.",1.4);return;}
+        const {rail,index}=station,dir=getMoveDir();
+        let direction=index===rail.points.length-1?-1:1;
+        if(index>0 && index<rail.points.length-1 && (dir.x||dir.y)) {
+          const forward=rail.points[index+1],back=rail.points[index-1];
+          const dot=p=>(dir.x*(p.x-station.x)+dir.y*(p.y-station.y))/(dist(p,station)||1);
+          direction=dot(back)>dot(forward)?-1:1;
+        }
+        releaseSling(false);sling.boostTime=0;player.dashTime=0;
+        Object.assign(player,{x:station.x,y:station.y,prevX:station.x,prevY:station.y,vx:0,vy:0});
+        transit.ride={rail,index:index+direction,direction};
+        showToast(`${rail.name} · F or Space to get off`,1.8);sfx("dash");
+      }
+
+      function updateMapTransit(dt) {
+        transit.cooldown=Math.max(0,transit.cooldown-dt);
+        const ride=transit.ride;if(!ride)return false;
+        let travel=1050*dt;
+        while(travel>0 && transit.ride) {
+          const target=ride.rail.points[ride.index],dx=target.x-player.x,dy=target.y-player.y,d=hypot(dx,dy);
+          const step=Math.min(travel,d),ux=dx/(d||1),uy=dy/(d||1);
+          if(moveMapBody(player,ux*step,uy*step)) {transit.ride=null;transit.cooldown=.5;player.vx=0;player.vy=0;break;}
+          player.vx=ux*1050;player.vy=uy*1050;player.angle=Math.atan2(uy,ux);
+          travel-=step;
+          if(d<=step+.01) {
+            ride.index+=ride.direction;
+            if(ride.index<0||ride.index>=ride.rail.points.length) {
+              transit.ride=null;transit.cooldown=.5;player.vx*=.3;player.vy*=.3;showToast("Rail terminus. Back on foot.",1);
+            }
+          } else break;
+        }
+        return true;
       }
 
       function generateZones(worldKey) {
@@ -4338,6 +4803,7 @@
 
       function teleportTo(p) {
         player.x = p.x + 34; player.y = p.y; player.vx = 0; player.vy = 0;
+        resetSkinFx(liveSkinFx);resetCargoTrail();
         burst(p.x, p.y, 22, BUILDINGS.teleporter.color, 1.8);
       }
 
@@ -4491,6 +4957,7 @@
         emitTrail(dt);
         updateCamera(dt);
         updateCells(dt);
+        stepCargoTrail(dt);
         updateCardEffects(dt);
         updateEnemies(dt);
         if(!tutorial.active)updateRivals(dt);
@@ -4511,7 +4978,11 @@
 
       function updatePlayer(dt) {
         player.prevX=player.x;player.prevY=player.y;
-        if(updateSling(dt))return;
+        if(updateMapTransit(dt))return;
+        if(updateSling(dt)) {
+          const x=player.x,y=player.y;player.x=player.prevX;player.y=player.prevY;
+          moveMapBody(player,x-player.x,y-player.y);return;
+        }
         const dir = getMoveDir();
         const cargoWeight = currentCargoWeight();
         const extraCarryPenalty = game.contractEffects?.carryPenalty || 0;
@@ -4540,8 +5011,7 @@
           player.angle += turn * (1 - Math.exp(-dt * 22));
         }
 
-        player.x += player.vx * dt;
-        player.y += player.vy * dt;
+        moveMapBody(player,player.vx*dt,player.vy*dt);
 
         const edgePad = 36;
         player.x = clamp(player.x, player.r + edgePad, world.w - player.r - edgePad);
@@ -4550,6 +5020,7 @@
 
       function dash() {
         if (!game.running || game.paused || game.choosingUpgrade) return;
+        if(transit.ride){transit.ride=null;transit.cooldown=.5;}
         if (player.dashCooldown > 0) return;
         releaseSling(false);sling.boostTime=0;
         let dir = getMoveDir();
@@ -4587,7 +5058,8 @@
         beacons.length=0;
         for(let ring=0;ring<3;ring++)for(let i=0;i<4;i++) {
           const a=i*Math.PI/2+Math.PI/4+ring*.22,r=[330,720,1160][ring];
-          beacons.push({id:ring*4+i,x:clamp(core.x+Math.cos(a)*r,240,world.w-240),y:clamp(core.y+Math.sin(a)*r,240,world.h-240),r:18});
+          const pos=mapSafePoint(clamp(core.x+Math.cos(a)*r,240,world.w-240),clamp(core.y+Math.sin(a)*r,240,world.h-240),90);
+          beacons.push({id:ring*4+i,...pos,r:18});
         }
         Object.assign(sling,{active:null,angle:0,radius:110,speed:0,direction:1,boostTime:0,cooldown:0});
         Object.assign(rivalState,{active:null,played:[],nextAt:18,nextKind:game.routeDepth%2?"vex":"rook"});
@@ -4600,7 +5072,7 @@
       }
 
       function attachSling() {
-        if(!game.running||game.paused||game.choosingUpgrade||sling.active||sling.cooldown>0||player.dashTime>0)return false;
+        if(!game.running||game.paused||game.choosingUpgrade||transit.ride||sling.active||sling.cooldown>0||player.dashTime>0)return false;
         const beacon=nearestBeacon();if(!beacon)return false;
         const dx=player.x-beacon.x,dy=player.y-beacon.y;
         sling.active=beacon;sling.angle=Math.atan2(dy,dx);sling.radius=clamp(hypot(dx,dy),64,190);
@@ -4696,13 +5168,14 @@
         const ship={kind,phase:"active",x:clamp(player.x+Math.cos(a)*280,100,world.w-100),y:clamp(player.y+Math.sin(a)*280,100,world.h-100),r:15,vx:0,vy:0,angle:0,dashTime:0,windup:0,cooldown:1.5,stun:0,hits:2,hitDashId:-1,remaining:kind==="rook"?42:35,waypoint:0,playerGate:0,rivalGate:0,fx:makeSkinFx(),profile};
         if(kind==="vex") {
           ship.x=player.x-40;ship.y=player.y+36;
-          const gates=beacons.slice(0,4).map(b=>{const dx=core.x-b.x,dy=core.y-b.y,d=hypot(dx,dy);return{x:b.x+dx/d*100,y:b.y+dy/d*100,r:54};});
+          const gates=beacons.slice(0,4).map(b=>{const dx=core.x-b.x,dy=core.y-b.y,d=hypot(dx,dy);return{...mapSafePoint(b.x+dx/d*100,b.y+dy/d*100,60),r:54};});
           let first=0;for(let i=1;i<gates.length;i++)if(dist(player,gates[i])<dist(player,gates[first]))first=i;
           ship.course=gates.slice(first).concat(gates.slice(0,first));
         } else {
           let nearest=0;for(let i=1;i<4;i++)if(dist(ship,beacons[i])<dist(ship,beacons[nearest]))nearest=i;
           ship.waypoint=nearest;
         }
+        Object.assign(ship,mapSafePoint(ship.x,ship.y,ship.r+8));
         rivalState.active=ship;rivalState.played.push(kind);rivalState.nextKind=kind==="rook"?"vex":"rook";
         shout(profile.name.toUpperCase(),kind==="rook"?"TWO DASH STRIKES. RECOVER THE PARCEL.":"FOUR GATES. BEAT VEX TO THE FINISH.",profile.color);renderRivalHUD();return true;
       }
@@ -4734,7 +5207,8 @@
         const prevX=rival.x,prevY=rival.y;
         rival.cooldown=Math.max(0,rival.cooldown-dt);rival.dashTime=Math.max(0,rival.dashTime-dt);rival.stun=Math.max(0,rival.stun-dt);
         const target=rival.kind==="rook"?beacons[rival.waypoint]:rival.course[rival.rivalGate];
-        const dx=target.x-rival.x,dy=target.y-rival.y,d=hypot(dx,dy)||1;
+        const waypoint=mapSteer(rival,target);
+        const dx=waypoint.x-rival.x,dy=waypoint.y-rival.y,d=hypot(dx,dy)||1;
         const base=rival.kind==="rook"?245:355+Math.min(45,game.wave*4+game.routeDepth*7);
         if(rival.kind==="rook") {
           if(rival.windup>0){rival.windup=Math.max(0,rival.windup-dt);if(rival.windup===0){rival.dashTime=.3;rival.vx=dx/d*750;rival.vy=dy/d*750;}}
@@ -4745,12 +5219,13 @@
             const speed=base*(rival.dashTime>0?1.7:1),response=1-Math.exp(-dt*9);
             rival.vx=lerp(rival.vx,dx/d*speed,response);rival.vy=lerp(rival.vy,dy/d*speed,response);
           }
-          rival.x=clamp(rival.x+rival.vx*dt,60,world.w-60);rival.y=clamp(rival.y+rival.vy*dt,60,world.h-60);
+          moveMapBody(rival,rival.vx*dt,rival.vy*dt);
+          rival.x=clamp(rival.x,60,world.w-60);rival.y=clamp(rival.y,60,world.h-60);
           rival.angle=Math.atan2(rival.vy,rival.vx);
         }
         stepSkinFx(rival.fx,rival,rival.profile.skin,dt,game.time);
         if(rival.kind==="rook") {
-          if(d<55)rival.waypoint=(rival.waypoint+1)%4;
+          if(dist(rival,target)<55)rival.waypoint=(rival.waypoint+1)%4;
           const contact=distanceToSegment(0,0,player.prevX-prevX,player.prevY-prevY,player.x-rival.x,player.y-rival.y);
           if(player.dashTime>.10&&rival.hitDashId!==player.dashId&&contact<player.r+rival.r+6) {
             rival.hitDashId=player.dashId;rival.hits--;rival.stun=.45;rival.windup=0;rival.dashTime=0;
@@ -4829,7 +5304,7 @@
           ctx.save();ctx.strokeStyle=current?"#8df4e2":"rgba(128,188,196,.3)";ctx.lineWidth=current?3:1.5;ctx.setLineDash(current?[]:[6,9]);
           ctx.beginPath();ctx.arc(gate.x,gate.y,gate.r,0,Math.PI*2);ctx.stroke();ctx.fillStyle=current?"#b2ffee":"#80aeb6";ctx.font="900 20px ui-sans-serif,system-ui";ctx.textAlign="center";ctx.fillText(String(i+1),gate.x,gate.y+7);ctx.restore();
         }
-        drawSkinFx(ctx,rival.fx,rival,rival.profile.skin,game.time);paintCourier(ctx,rival,rival.profile.skin,game.time);
+        drawSkinFx(ctx,rival.fx,rival,rival.profile.skin,game.time);paintCourier(ctx,rival,rival.profile.skin,game.time,{flameBend:rival.fx.flameBend});
         ctx.save();ctx.fillStyle=rival.profile.color;ctx.textAlign="center";ctx.font="850 10px ui-sans-serif,system-ui";
         ctx.fillText(rival.kind==="rook"?`ROOK · ${rival.hits}/2`:"VEX",rival.x,rival.y-31);
         if(rival.kind==="rook"){ctx.fillStyle="#ffce86";ctx.fillRect(rival.x-7,rival.y+23,14,10);if(rival.windup>0){ctx.font="900 19px ui-sans-serif,system-ui";ctx.fillText("!",rival.x,rival.y-48);}}
@@ -4867,14 +5342,14 @@
             const dx = player.x - c.x;
             const dy = player.y - c.y;
             const d = Math.hypot(dx, dy) || 1;
-            if (d < magnetRange) {
+            if (d < magnetRange && mapLineClear(c,player,c.r)) {
               const pull = 120 + (1 - d / magnetRange) * 820;
               c.x += dx / d * pull * dt;
               c.y += dy / d * pull * dt;
             }
           }
 
-          if (dist(player, c) < player.r + c.r + 4) {
+          if (dist(player, c) < player.r + c.r + 4 && mapLineClear(c,player,0)) {
             const type = CELL_TYPES[c.type];
             if (cargoSlotsUsed() + type.slots <= player.capacity) {
               collectCell(i);
@@ -5093,6 +5568,7 @@
         for (let i = enemies.length - 1; i >= 0; i--) {
           const e = enemies[i];
           const def = ENEMY_TYPES[e.type];
+          const previousX=e.x,previousY=e.y;
           let motion = (e.chillUntil || 0) > game.time ? .45 : 1;
           let burn = 0;
           if (!e.agent) {
@@ -5124,8 +5600,9 @@
             e.y += Math.cos(e.life * 1.3) * 14 * dt;
             continue;
           }
-          let dx = target.x - e.x;
-          let dy = target.y - e.y;
+          const waypoint=mapSteer(e,target);
+          let dx = waypoint.x - e.x;
+          let dy = waypoint.y - e.y;
           let d = Math.hypot(dx, dy) || 1;
           let tx = dx / d;
           let ty = dy / d;
@@ -5142,7 +5619,7 @@
               e.lungeTime = Math.max(0, e.lungeTime - dt);
               e.x += e.aimX * 590 * dt * motion;
               e.y += e.aimY * 590 * dt * motion;
-            } else if (e.attackCooldown === 0 && hypot(prey.x - e.x, prey.y - e.y) < 560) {
+            } else if (e.attackCooldown === 0 && hypot(prey.x - e.x, prey.y - e.y) < 560 && mapLineClear(e,prey,e.r)) {
               const aimX = prey.x + prey.vx * .18 - e.x;
               const aimY = prey.y + prey.vy * .18 - e.y;
               const length = hypot(aimX, aimY) || 1;
@@ -5161,6 +5638,11 @@
           if (e.bump > .5) {
             e.x += e.bumpX * e.bump * dt;
             e.y += e.bumpY * e.bump * dt;
+          }
+
+          if(mapLayout) {
+            const dx=e.x-previousX,dy=e.y-previousY;e.x=previousX;e.y=previousY;
+            moveMapBody(e,dx,dy);
           }
 
           if (e.agent) {
@@ -5422,9 +5904,10 @@
       }
 
       function spawnCellAt(type, x, y) {
+        const pos=mapSafePoint(x,y,22);
         cells.push({
-          x: clamp(x, 60, world.w - 60),
-          y: clamp(y, 60, world.h - 60),
+          x: pos.x,
+          y: pos.y,
           r: type === "heavy" ? 15 : type === "green" ? 10 : 12,
           type,
           spin: rand(0, Math.PI * 2),
@@ -5444,7 +5927,8 @@
       }
 
       function dropCellNear(x, y, type) {
-        cells.push({ x: clamp(x + rand(-42, 42), 40, world.w - 40), y: clamp(y + rand(-42, 42), 40, world.h - 40), r: type === "heavy" ? 15 : 12, type, spin: 0, spinSpeed: rand(.8, 1.6), life: 0, collectAfter: game.time + .65 });
+        const pos=mapSafePoint(x+rand(-42,42),y+rand(-42,42),22);
+        cells.push({ ...pos, r: type === "heavy" ? 15 : 12, type, spin: 0, spinSpeed: rand(.8, 1.6), life: 0, collectAfter: game.time + .65 });
       }
 
       function rollCellType() {
@@ -5480,7 +5964,8 @@
       function spawnEnemy(forcedType) {
         const type = forcedType || rollEnemyType();
         const def = ENEMY_TYPES[type];
-        const pos = randomEdgePoint(34);
+        const edge = randomEdgePoint(34);
+        const pos = mapSafePoint(edge.x,edge.y,def.r+8);
         enemies.push({
           type,
           x: pos.x,
@@ -5902,7 +6387,7 @@
         }
         context.save();context.translate(260-camera.x,170-camera.y);
         drawSkinFx(context,skinPreview.fx,skinPreview.ship,COURIER_SKINS[skinPreview.key],time);
-        paintCourier(context,skinPreview.ship,COURIER_SKINS[skinPreview.key],time);
+        paintCourier(context,skinPreview.ship,COURIER_SKINS[skinPreview.key],time,{flameBend:skinPreview.fx.flameBend});
         context.restore();
         context.fillStyle="rgba(172,191,223,.7)";context.font="700 10px ui-monospace,monospace";
         context.textAlign="left";context.fillText(skinPreview.dashTime>0?"DASH":"CRUISE",18,338);
@@ -6002,6 +6487,7 @@
         drawZones();
         drawCaptureWorld();
         drawOuterRisk();
+        drawMapLayout();
         drawCardEffects();
         drawBeacons();
         drawCore();
@@ -6022,6 +6508,8 @@
         drawBanner();
         drawCoreCompass();
         drawRivalCompass();
+        drawMapRadar();
+        drawMapPrompt();
         drawFeedback();
         ctx.restore();
         drawTutorialMarker();
@@ -6036,6 +6524,7 @@
         drawWorldFloor();
         drawZones();
         drawCaptureWorld();
+        drawMapLayout();
         drawCore();
         drawAttractCourier();
         ctx.restore();
@@ -6098,7 +6587,7 @@
 
       function drawWorldFloor() {
         ctx.save();
-        ctx.fillStyle = game.rushTime > 0 ? "rgba(20,42,56,.78)" : "rgba(24,32,55,.75)";
+        ctx.fillStyle = mapLayout ? mapLayout.floor : game.rushTime > 0 ? "rgba(20,42,56,.78)" : "rgba(24,32,55,.75)";
         ctx.fillRect(0, 0, world.w, world.h);
         ctx.strokeStyle = game.rushTime > 0 ? "rgba(100,255,224,.13)" : "rgba(145,169,225,.1)";
         ctx.lineWidth = 1;
@@ -6113,6 +6602,116 @@
         ctx.lineWidth = 2;
         ctx.strokeRect(16, 16, world.w - 32, world.h - 32);
         ctx.restore();
+      }
+
+      function drawMapLayout() {
+        if(!mapLayout)return;
+        const m=mapLayout;
+        ctx.save();
+        // Broad paving, edge gutters and broken lane markings make routes readable.
+        for(const points of m.paths) {
+          const trace=()=>{ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));};
+          ctx.lineJoin="round";ctx.lineCap="round";ctx.strokeStyle="#0e1821";ctx.lineWidth=128;trace();ctx.stroke();
+          ctx.strokeStyle=hexToRgba(m.edge,.23);ctx.lineWidth=118;trace();ctx.stroke();
+          ctx.strokeStyle=m.floor;ctx.lineWidth=112;trace();ctx.stroke();
+          ctx.setLineDash([14,30]);ctx.strokeStyle=hexToRgba(m.edge,.32);ctx.lineWidth=2;trace();ctx.stroke();ctx.setLineDash([]);
+        }
+        ctx.fillStyle=hexToRgba(WORLDS[m.key].tint,.035);ctx.beginPath();ctx.arc(core.x,core.y,158,0,Math.PI*2);ctx.fill();
+        ctx.strokeStyle=hexToRgba(m.edge,.3);ctx.lineWidth=2;ctx.beginPath();ctx.arc(core.x,core.y,158,0,Math.PI*2);ctx.stroke();
+        for(const b of m.walls) {
+          if(Math.abs(b.x+b.w/2-camera.x)>W/2+b.w/2+80 || Math.abs(b.y+b.h/2-camera.y)>H/2+b.h/2+80)continue;
+          ctx.fillStyle="rgba(0,0,0,.32)";ctx.fillRect(b.x+9,b.y+12,b.w,b.h);
+          ctx.fillStyle=m.wall;ctx.fillRect(b.x,b.y,b.w,b.h);
+          ctx.strokeStyle=m.edge;ctx.lineWidth=2;ctx.strokeRect(b.x+.5,b.y+.5,b.w-1,b.h-1);
+          ctx.strokeStyle=hexToRgba(m.edge,.24);ctx.strokeRect(b.x+9,b.y+9,b.w-18,b.h-18);
+          ctx.fillStyle=hexToRgba(m.edge,.25);
+          if(b.kind==="hedge") {
+            for(let x=b.x+23;x<b.x+b.w-12;x+=38)for(let y=b.y+23;y<b.y+b.h-12;y+=38){ctx.beginPath();ctx.arc(x,y,13,0,Math.PI*2);ctx.fill();}
+          } else if(b.kind==="furnace") {
+            ctx.fillStyle="rgba(255,123,68,.17)";
+            for(let y=b.y+25;y<b.y+b.h-14;y+=36)ctx.fillRect(b.x+18,y,b.w-36,7);
+            ctx.fillStyle="#d38b60";ctx.fillRect(b.x+13,b.y+13,7,7);
+          } else if(b.kind==="glass"||b.kind==="crystal") {
+            ctx.save();ctx.beginPath();ctx.rect(b.x+4,b.y+4,b.w-8,b.h-8);ctx.clip();
+            ctx.strokeStyle="rgba(176,226,246,.16)";ctx.lineWidth=12;
+            for(let x=b.x-b.h;x<b.x+b.w;x+=65){ctx.beginPath();ctx.moveTo(x,b.y);ctx.lineTo(x+b.h,b.y+b.h);ctx.stroke();}ctx.restore();
+          } else if(b.kind==="ruin") {
+            ctx.strokeStyle="rgba(13,16,29,.55)";ctx.lineWidth=5;
+            ctx.beginPath();ctx.moveTo(b.x+b.w*.6,b.y);ctx.lineTo(b.x+b.w*.45,b.y+b.h*.4);ctx.lineTo(b.x+b.w*.68,b.y+b.h*.6);ctx.lineTo(b.x+b.w*.52,b.y+b.h);ctx.stroke();
+          } else {
+            const vertical=b.h>b.w;
+            for(let n=24;n<(vertical?b.h:b.w)-12;n+=34)ctx.fillRect(b.x+(vertical?16:n),b.y+(vertical?n:16),vertical?b.w-32:12,vertical?9:b.h-32);
+          }
+        }
+        for(const l of m.landmarks) {
+          ctx.save();ctx.translate(l.x,l.y);
+          ctx.strokeStyle=hexToRgba(m.edge,.6);ctx.lineWidth=2;
+          ctx.beginPath();ctx.arc(0,0,52,0,Math.PI*2);ctx.stroke();
+          if(l.kind==="spire") {
+            ctx.fillStyle=m.edge;ctx.beginPath();ctx.moveTo(0,-42);ctx.lineTo(18,15);ctx.lineTo(0,28);ctx.lineTo(-18,15);ctx.closePath();ctx.fill();
+            ctx.strokeStyle=WORLDS[m.key].tint;ctx.beginPath();ctx.ellipse(0,-17,29,8,0,0,Math.PI*2);ctx.stroke();
+          } else if(l.kind==="tree") {
+            ctx.fillStyle="#456744";for(let i=0;i<5;i++){const a=i*Math.PI*2/5;ctx.beginPath();ctx.arc(Math.cos(a)*20,Math.sin(a)*20,24,0,Math.PI*2);ctx.fill();}
+            ctx.fillStyle="#a3c681";ctx.beginPath();ctx.arc(0,0,10,0,Math.PI*2);ctx.fill();
+          } else if(l.kind==="crystal") {
+            ctx.fillStyle="#87b7d0";skinStar(ctx,0,0,33,4,0);ctx.fill();
+          } else {ctx.strokeRect(-23,-23,46,46);ctx.strokeRect(-13,-13,26,26);}
+          ctx.font="750 11px ui-monospace,monospace";ctx.textAlign="center";ctx.fillStyle=m.edge;
+          ctx.fillText(l.name,0,-67);ctx.restore();
+        }
+        for(const rail of m.rails) {
+          const points=rail.points;
+          const trace=()=>{ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));};
+          ctx.lineJoin="round";ctx.lineCap="round";ctx.strokeStyle="#0c1922";ctx.lineWidth=23;trace();ctx.stroke();
+          ctx.strokeStyle="#447d8a";ctx.lineWidth=13;trace();ctx.stroke();
+          ctx.strokeStyle="#172e3b";ctx.lineWidth=7;trace();ctx.stroke();
+          ctx.strokeStyle="#72dce5";ctx.lineWidth=2;trace();ctx.stroke();
+          if(!reducedMotion){ctx.setLineDash([4,58]);ctx.lineDashOffset=-game.time*90;ctx.lineWidth=5;trace();ctx.stroke();ctx.setLineDash([]);ctx.lineDashOffset=0;}
+          points.forEach((p,i)=>{
+            ctx.fillStyle="#172e3b";ctx.strokeStyle="#72dce5";ctx.lineWidth=2;
+            ctx.beginPath();ctx.arc(p.x,p.y,25,0,Math.PI*2);ctx.fill();ctx.stroke();
+            ctx.fillStyle="#a8f0ed";ctx.font="800 10px ui-monospace,monospace";ctx.textAlign="center";ctx.fillText("F",p.x,p.y+4);
+            if(i===0 || i===points.length-1){ctx.fillStyle="#88c4cd";ctx.font="750 10px ui-monospace,monospace";ctx.fillText(rail.name.toUpperCase(),p.x,p.y+43);}
+          });
+        }
+        for(const p of m.portals) {
+          ctx.save();ctx.translate(p.x,p.y);ctx.strokeStyle="#c19cff";ctx.fillStyle="#302945";ctx.lineWidth=2;
+          ctx.beginPath();ctx.arc(0,0,32,0,Math.PI*2);ctx.fill();ctx.stroke();
+          ctx.save();ctx.rotate(reducedMotion?0:game.time*.6);ctx.setLineDash([11,9]);ctx.beginPath();ctx.arc(0,0,40,0,Math.PI*2);ctx.stroke();ctx.restore();
+          ctx.fillStyle="#e1cfff";ctx.font="800 12px ui-monospace,monospace";ctx.textAlign="center";ctx.fillText(String.fromCharCode(65+p.pair),0,4);
+          ctx.font="750 10px ui-monospace,monospace";ctx.fillStyle="#b8a3d9";ctx.fillText(p.name.toUpperCase(),0,61);ctx.restore();
+        }
+        ctx.restore();
+      }
+
+      function drawMapPrompt() {
+        if(!mapLayout||game.paused||game.choosingUpgrade)return;
+        const portal=mapLayout.portals.find(p=>dist(player,p)<72),station=nearestMapStation();
+        const text=transit.ride?`${transit.ride.rail.name} · F / Space: get off`:portal?`F · ${portal.name} → paired gate`:station?`F · ${station.rail.name} · hold a direction to choose your way`:null;
+        if(!text)return;
+        const pos=worldToScreen(player.x,player.y);
+        ctx.save();ctx.font="750 11px ui-monospace,monospace";ctx.textAlign="center";
+        const width=Math.min(W-24,ctx.measureText(text).width+24),x=clamp(pos.x,width/2+12,W-width/2-12),y=clamp(pos.y+62,150,H-145);
+        ctx.fillStyle="#14222e";ctx.fillRect(x-width/2,y-16,width,28);ctx.strokeStyle=portal?"#c19cff":"#72dce5";ctx.strokeRect(x-width/2,y-16,width,28);
+        ctx.fillStyle="#dfede7";ctx.fillText(text,x,y+2,width-12);ctx.restore();
+      }
+
+      function drawMapRadar() {
+        if(!mapLayout||game.choosingUpgrade||W<700||H<500)return;
+        const width=168,height=146,x=W-width-18,y=H-height-92,m=mapLayout;
+        ctx.save();ctx.translate(x,y);ctx.fillStyle="rgba(14,23,32,.94)";ctx.fillRect(0,0,width,height);
+        ctx.strokeStyle="#53636c";ctx.lineWidth=1;ctx.strokeRect(.5,.5,width-1,height-1);
+        ctx.font="750 9px ui-monospace,monospace";ctx.fillStyle="#bac9cc";ctx.fillText("ROUTE / "+WORLDS[m.key].name.toUpperCase().split(" ")[0],10,16);
+        ctx.save();ctx.translate(9,24);ctx.scale((width-18)/world.w,(height-42)/world.h);
+        ctx.fillStyle=m.wall;for(const b of m.walls)ctx.fillRect(b.x,b.y,b.w,b.h);
+        ctx.strokeStyle="#72dce5";ctx.lineWidth=18;
+        for(const rail of m.rails){ctx.beginPath();rail.points.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();}
+        ctx.strokeStyle="#c19cff";ctx.lineWidth=18;
+        for(const p of m.portals){ctx.beginPath();ctx.arc(p.x,p.y,38,0,Math.PI*2);ctx.stroke();}
+        ctx.strokeStyle="rgba(222,236,237,.28)";ctx.lineWidth=13;ctx.strokeRect(camera.x-W/2,camera.y-H/2,W,H);
+        ctx.fillStyle="#ffd38a";ctx.beginPath();ctx.arc(core.x,core.y,48,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle="#fff8e6";ctx.beginPath();ctx.arc(player.x,player.y,43,0,Math.PI*2);ctx.fill();
+        ctx.restore();ctx.fillStyle="#8ca1aa";ctx.font="650 8px ui-monospace,monospace";ctx.fillText("RAIL / TEAL   GATE / VIOLET",9,height-8);ctx.restore();
       }
 
       function drawZones() {
@@ -6529,8 +7128,6 @@
       function drawPlayer() {
         const skin = getCurrentSkin();
         const invBlink = player.invuln > 0 && Math.floor(game.time * 18) % 2 === 0;
-        const speed = Math.hypot(player.vx, player.vy);
-        const moving = speed > 35;
 
         if (player.armor > 0) {
           ctx.strokeStyle = "rgba(215,210,200,.55)";
@@ -6540,32 +7137,30 @@
           ctx.stroke();
         }
 
-        paintCourier(ctx,player,skin,game.time,{rushing:game.rushTime>0,invBlink});
-
         if (player.trailPull > 0 && (player.dashTime > 0 || hypot(player.vx, player.vy) > 235)) {
-          ctx.save(); ctx.strokeStyle = "rgba(255,209,107,.5)"; ctx.lineWidth = 1.5;
+          ctx.save();ctx.translate(player.x,player.y);ctx.rotate(player.angle);
+          ctx.strokeStyle="rgba(255,209,107,.5)";ctx.lineWidth=1.5;
           for (const side of [-1, 1]) {
-            const angle = player.angle + side * .15;
-            ctx.beginPath(); ctx.moveTo(player.x, player.y); ctx.lineTo(player.x - Math.cos(angle) * 85, player.y - Math.sin(angle) * 85); ctx.stroke();
+            ctx.beginPath();ctx.moveTo(-12,side*5);
+            ctx.quadraticCurveTo(-65,side*10,-85,side*13+liveSkinFx.flameBend*.5);ctx.stroke();
           }
           ctx.restore();
         }
         const used = cargoSlotsUsed();
         if (used > 0) {
-          player.cargo.forEach((item, idx) => {
+          player.cargo.forEach(item => {
             const type = CELL_TYPES[item.type];
-            const distance = 32 + idx * 13;
-            const sway = Math.sin(game.time * 11 - idx * .8) * (moving ? 6 : 2);
-            const x = player.x - Math.cos(player.angle) * distance - Math.sin(player.angle) * sway;
-            const y = player.y - Math.sin(player.angle) * distance + Math.cos(player.angle) * sway;
+            const p = item.flow;
+            if(!p)return;
             ctx.save();
-            ctx.translate(x, y); ctx.rotate(game.time * 2 + idx);
+            ctx.translate(p.x, p.y); ctx.rotate(p.angle+Math.PI/4);
             ctx.fillStyle = type.color;
             ctx.strokeStyle = "rgba(255,243,203,.6)"; ctx.lineWidth = 1;
             ctx.fillRect(-4.5, -4.5, 9, 9); ctx.strokeRect(-4.5, -4.5, 9, 9);
             ctx.restore();
           });
         }
+        paintCourier(ctx,player,skin,game.time,{rushing:game.rushTime>0,invBlink,flameBend:liveSkinFx.flameBend});
       }
 
       function drawParticles() {
